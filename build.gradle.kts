@@ -15,9 +15,11 @@ plugins {
     id("io.quarkus") version "0.19.1"
 }
 
-//allOpen {
-//    annotation("javax.ws.rs.Path")
-//}
+allOpen {
+    annotation("javax.ws.rs.Path")
+    annotation("javax.enterprise.context.ApplicationScoped")
+    annotation("sample.quarkus.app.MyAnnotation")
+}
 
 repositories {
     mavenCentral()
@@ -34,11 +36,19 @@ dependencies {
     implementation(enforcedPlatform("io.quarkus:quarkus-bom:0.19.1"))
     implementation("io.quarkus:quarkus-resteasy")
 
+    implementation("io.quarkus:quarkus-resteasy-jsonb")
+
+    implementation("io.quarkus:quarkus-kotlin")
+
+
     // Use the Kotlin test library.
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 
-    // Use the Kotlin JUnit integration.
+//    // Use the Kotlin JUnit integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+
+    testImplementation("io.quarkus:quarkus-junit5")
+    testImplementation("io.rest-assured:rest-assured:3.1.0")
 }
 
 quarkus {
@@ -46,3 +56,4 @@ quarkus {
     setOutputDirectory(project.projectDir.resolve("build/classes/kotlin/main").absolutePath)
 }
 
+kotlin.sourceSets["test"].kotlin.srcDirs("test")
